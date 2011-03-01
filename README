@@ -1,4 +1,4 @@
-Overview
+==Overview==
 The birthday picker seeks to emulate the functionality of the birthday picker on the Facebook signup page. It uses three select boxes to choose a date, and tries to ensure that the date is valid by accounting for leap years, etc... It also has a number of options, making it somewhat customizable. The birthday picker generates the following markup:
 
 <fieldset class='birthday-picker'>
@@ -8,7 +8,7 @@ The birthday picker seeks to emulate the functionality of the birthday picker on
 </fieldset>
 It also adds an option list to each of the select boxes, changing the options dynamically based on plugin settings and user interactions.
 
-Options
+==Options==
 As with most plugins, the birthdaypicker can be passed a hash of options as follows:
 
 $("div").birthdaypicker(options_hash)
