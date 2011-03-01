@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Birthday Picker</title>
+    <meta name="author" content="Abe Coffman">
+    <meta name="description" content="Jquery Plugin for picking a birthday" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="bday-picker.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#picker1").birthdaypicker({
+          legend: "default settings"
+        });
+        $("#picker2").birthdaypicker({
+          legend: "futureDates: true, maxYear: 2020, maxAge: 75",
+          futureDates: true,
+          maxYear: 2020,
+          maxAge: 75
+        });
+        $("#picker3").birthdaypicker({
+          legend: "dateFormat: bigEndian, monthFormat: long, placeholder: false",
+          dateFormat: "bigEndian",
+          monthFormat: "long",
+          placeholder: false
+        });
+      });
+    </script>
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      h1 { margin: 0; padding-top: 20px; }
+      h3 { margin-bottom: 5px; }
+      #container { height: 100%; width: 600px; margin: 0 auto; padding: 0 50px; background: #eee; }
+    </style>
+</head>
+<body>
+    <div id="container">
+      <h1>Birthday Picker jQuery Plugin</h1>
+      <div id="overview">
+        <p><a href="http://plugins.jquery.com/project/birthdaypicker">http://plugins.jquery.com/project/birthdaypicker</a></p>
+      </div>
+      <h3>Examples</h3>
+      <div id="examples">
+        <p>All examples include the legend setting</p>
+        <p id="picker1"></p>
+        <p id="picker2"></p>
+        <p id="picker3"></p>
+      </div>
+      <h3>Source</h3>
+      <div id="link">
+        Commented: <a href="http://abecoffman.com/birthdaypicker/bday-picker.js">bday-picker.js</a><br />
+        Minified: <a href="http://abecoffman.com/birthdaypicker/bday-picker.min.js">bday-picker.min.js</a>
+      </div>
+    </div>
+</body>
+</html>
