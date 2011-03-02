@@ -1,20 +1,20 @@
 #Overview
 The birthday picker seeks to emulate the functionality of the birthday picker on the Facebook signup page. It uses three select boxes to choose a date, and tries to ensure that the date is valid by accounting for leap years, etc... It also has a number of options, making it somewhat customizable. The birthday picker generates the following markup:
 
-<fieldset class='birthday-picker'>
-    <select class='birth-year' name='birth[year]'></select>
-    <select class='birth-month' name='birth[month]'></select>
-    <select class='birth-day' name='birth[day]'></select>
-</fieldset>
+    <fieldset class='birthday-picker'>
+        <select class='birth-year' name='birth[year]'></select>
+        <select class='birth-month' name='birth[month]'></select>
+        <select class='birth-day' name='birth[day]'></select>
+    </fieldset>
 
 It also adds an option list to each of the select boxes, changing the options dynamically based on plugin settings and user interactions.
 
 #Options
 As with most plugins, the birthdaypicker can be passed a hash of options as follows:
 
-<script type="text/javascript">$("div").birthdaypicker(options={})</script>
+    $("div").birthdaypicker(options={});
 
->The following options are currently supported:
+The following options are currently supported:
 
 ###maxAge (number)
 #### Default value: 120 ####
