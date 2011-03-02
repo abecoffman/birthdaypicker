@@ -18,6 +18,8 @@ The following options are currently supported:
 ###maxAge (number)
 
 #### Default value: 120 ####
+
+
 The maxAge setting determines the oldest year you can pick for a birthday. So if you set the maxAge to 100 and the current year is 2010, then the oldest year you can pick will be 1910.
 
 ###futureDates (boolean)
