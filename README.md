@@ -44,6 +44,14 @@ The monthFormat setting determines the text displayed in the month select box. I
 ####Default value: true
 The placeholder adds a default option to each select list just like Facebook does on their signup page. The default option just says Month, Day, or Year with a colon after it. If you keep this set to true, you will need to add logic, preferably on the client and server, to ensure this option isn't chosen. The value for these options is 0.
 
+###defaultDate (string)
+####Default value: false
+The defaultDate must be a date that can be parsed by the Javascript date library. I recommend passing a string in one of the following formats: MM-DD-YYYY or YYYY-MM-DD.
+
+###hiddenDate (boolean)
+####Default Value: true
+The hiddenDate adds a hidden input field named "birthdate" to the fieldset which concatenates all of the individual select boxes into a single date. This date is only available after the user has selected a date in each of the select boxes. It can make server side handling easier as you only have to worry about one field.
+
 ###legend (string)
 
 ####Default value: null
