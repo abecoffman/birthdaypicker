@@ -5,6 +5,7 @@ The birthday picker seeks to emulate the functionality of the birthday picker on
         <select class='birth-year' name='birth[year]'></select>
         <select class='birth-month' name='birth[month]'></select>
         <select class='birth-day' name='birth[day]'></select>
+        <input type='hidden' name='birthdate' />
     </fieldset>
 
 It also adds an option list to each of the select boxes, changing the options dynamically based on plugin settings and user interactions.
