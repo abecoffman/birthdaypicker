@@ -7,17 +7,18 @@
     <meta name="description" content="Jquery Plugin for picking a birthday" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="bday-picker.min.js"></script>
+    <script type="text/javascript" src="bday-picker.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
         $("#picker1").birthdaypicker({
           legend: "default settings"
         });
         $("#picker2").birthdaypicker({
-          legend: "futureDates: true, maxYear: 2020, maxAge: 75",
+          legend: "futureDates: true, maxYear: 2020, maxAge: 75, defaultDate: 10-17-1980",
           futureDates: true,
           maxYear: 2020,
-          maxAge: 75
+          maxAge: 75,
+          defaultDate: "10-17-1980"
         });
         $("#picker3").birthdaypicker({
           legend: "dateFormat: bigEndian, monthFormat: long, placeholder: false",
@@ -49,8 +50,8 @@
       </div>
       <h3>Source</h3>
       <div id="link">
-        Commented: <a href="http://abecoffman.com/birthdaypicker/bday-picker.js">bday-picker.js</a><br />
-        Minified: <a href="http://abecoffman.com/birthdaypicker/bday-picker.min.js">bday-picker.min.js</a>
+        Commented: <a href="http://abecoffman.com/stuff/birthdaypicker/bday-picker.js">bday-picker.js</a><br />
+        Minified: <a href="http://abecoffman.com/stuff/birthdaypicker/bday-picker.min.js">bday-picker.min.js</a>
       </div>
     </div>
 </body>
