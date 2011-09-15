@@ -30,6 +30,7 @@
       "placeholder"   : true,
       "legend"        : "",
       "defaultDate"   : false,
+      "fieldName"   :  "birthdate",
       "hiddenDate"    : true
     };
     
@@ -71,7 +72,7 @@
       
       // Create the hidden date markup
       if(settings["hiddenDate"]) {
-        $("<input type='hidden' name='birthdate' />").val(hiddenDate).appendTo($fieldset);
+        $("<input type='hidden' name='"+settings["fieldName"]+"' />").val(hiddenDate).appendTo($fieldset);
       }
       
       // Build the initial option sets
