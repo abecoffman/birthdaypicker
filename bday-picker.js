@@ -1,5 +1,5 @@
 /*!
- * jQuery Birthday Picker: v1.2 - 3/21/2011
+ * jQuery Birthday Picker: v1.3 - 3/21/2011
  * http://abecoffman.com/stuff/birthdaypicker
  * 
  * Copyright (c) 2010 Abe Coffman
