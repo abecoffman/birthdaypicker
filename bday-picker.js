@@ -153,9 +153,9 @@
           if(settings["dateFormat"] == "bigEndian") {
             hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
           } else if(settings["dateFormat"] == "littleEndian") {
-            hiddenDate = todayDay + "-" + selectedMonth + "-" + selectedYear;
+            hiddenDate = selectedDay + "-" + selectedMonth + "-" + selectedYear;
           } else {
-            hiddenDate = selectedDay + "-" + todayDay + "-" + selectedYear;
+            hiddenDate = selectedMonth + "-" + selectedDay + "-" + selectedYear;
           }
           $(this).children('input[type="hidden"]').val(hiddenDate);
         }
