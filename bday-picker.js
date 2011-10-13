@@ -45,51 +45,52 @@
           $month = $("<select class='birth-month' name='birth[month]'></select>"),
           $day = $("<select class='birth-day' name='birth[day]'></select>");
       
-      if(settings["legend"]) { $("<legend>" + settings["legend"] + "</legend>").appendTo($fieldset); }
+      if (settings["legend"]) { $("<legend>" + settings["legend"] + "</legend>").appendTo($fieldset); }
       
       // Deal with the various Date Formats
-      var hiddenDate;
-      if(settings["dateFormat"] == "bigEndian") {
-        hiddenDate = todayYear + "-" + todayMonth + "-" + todayDay;
+      if (settings["dateFormat"] == "bigEndian") {
         $fieldset.append($year).append($month).append($day);
-      } else if(settings["dateFormat"] == "littleEndian") {
-        hiddenDate = todayDay + "-" + todayMonth + "-" + todayYear;
+      } else if (settings["dateFormat"] == "littleEndian") {
         $fieldset.append($day).append($month).append($year);
       } else {
         $fieldset.append($month).append($day).append($year);
-        hiddenDate = todayMonth + "-" + todayDay + "-" + todayYear;
       }
       
       // Add the option placeholders if specified
-      if(settings["placeholder"]) {
+      if (settings["placeholder"]) {
         $("<option value='0'>Year:</option>").appendTo($year);
         $("<option value='0'>Month:</option>").appendTo($month);
         $("<option value='0'>Day:</option>").appendTo($day);
-        hiddenDate = null;
       }
       
-      // Account for a default date and set hiddenDate accordingly
-      if(settings["defaultDate"]) { hiddenDate = settings["defaultDate"] }
+      var hiddenDate;
+      if (settings["defaultDate"]) {
+        var defDate = new Date(settings["defaultDate"]),
+        defYear = defDate.getFullYear(),
+        defMonth = defDate.getMonth() + 1,
+        defDay = defDate.getDate();
+        hiddenDate = defYear + "-" + defMonth + "-" + defDay;
+      }
       
       // Create the hidden date markup
-      if(settings["hiddenDate"]) {
+      if (settings["hiddenDate"]) {
         $("<input type='hidden' name='"+settings["fieldName"]+"' id='"+settings["fieldId"]+"' />").val(hiddenDate).appendTo($fieldset);
       }
       
       // Build the initial option sets
       var startYear = todayYear;
       var endYear = todayYear - settings["maxAge"];
-      if(settings["futureDates"] && settings["maxYear"] != todayYear) {
+      if (settings["futureDates"] && settings["maxYear"] != todayYear) {
         if (settings["maxYear"] > 1000) { startYear = settings["maxYear"]; }
         else { startYear = todayYear + settings["maxYear"]; }
       }
-      while(startYear >= endYear) { $("<option></option>").attr("value", startYear).text(startYear).appendTo($year); startYear--; }
-      for( var j=0; j<12; j++) { $("<option></option>").attr("value", j+1).text(months[settings["monthFormat"]][j]).appendTo($month); }
-      for(var k=1; k<32; k++) { $("<option></option>").attr("value", k).text(k).appendTo($day); }
+      while (startYear >= endYear) { $("<option></option>").attr("value", startYear).text(startYear).appendTo($year); startYear--; }
+      for (var j=0; j<12; j++) { $("<option></option>").attr("value", j+1).text(months[settings["monthFormat"]][j]).appendTo($month); }
+      for (var k=1; k<32; k++) { $("<option></option>").attr("value", k).text(k).appendTo($day); }
       $(this).append($fieldset);
       
       // Set the default date if given
-      if(settings["defaultDate"]) {
+      if (settings["defaultDate"]) {
         var date = new Date(settings["defaultDate"]);
         $year.val(date.getFullYear());
         $month.val(date.getMonth() + 1);
@@ -97,7 +98,7 @@
       }
       
       // Update the option sets according to options and user selections
-      $fieldset.change(function(){
+      $fieldset.change(function() {
             // todays date values
         var todayDate = new Date(),
             todayYear = todayDate.getFullYear(),
@@ -115,23 +116,22 @@
             
         // Dealing with the number of days in a month
         // http://bugs.jquery.com/ticket/3041
-        if(curMaxDay > actMaxDay) {
-          while(curMaxDay > actMaxDay) {
+        if (curMaxDay > actMaxDay) {
+          while (curMaxDay > actMaxDay) {
             $day.children(":last").remove();
             curMaxDay--;
           }
-        }
-        else if(curMaxDay < actMaxDay) { 
-          while(curMaxDay < actMaxDay) {
+        } else if (curMaxDay < actMaxDay) { 
+          while (curMaxDay < actMaxDay) {
             curMaxDay++;
             $day.append("<option value=" + curMaxDay + ">" + curMaxDay + "</option>");
           }
         }
         
         // Dealing with future months/days in current year
-        if(!settings["futureDates"] && selectedYear == todayYear) {
-          if(curMaxMonth > todayMonth) {
-            while(curMaxMonth > todayMonth) {
+        if (!settings["futureDates"] && selectedYear == todayYear) {
+          if (curMaxMonth > todayMonth) {
+            while (curMaxMonth > todayMonth) {
               $month.children(":last").remove();
               curMaxMonth--;
             }
@@ -142,23 +142,17 @@
         
         // Adding months back that may have been removed
         // http://bugs.jquery.com/ticket/3041
-        if(selectedYear != todayYear && curMaxMonth != 12) {
-          while(curMaxMonth < 12) {
+        if (selectedYear != todayYear && curMaxMonth != 12) {
+          while (curMaxMonth < 12) {
             $month.append("<option value=" + (curMaxMonth+1) + ">" + months[settings["monthFormat"]][curMaxMonth] + "</option>");
             curMaxMonth++;
           }
         }
         
         // update the hidden date
-        if((selectedYear * selectedMonth * selectedDay) != 0) {
-          if(settings["dateFormat"] == "bigEndian") {
-            hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
-          } else if(settings["dateFormat"] == "littleEndian") {
-            hiddenDate = selectedDay + "-" + selectedMonth + "-" + selectedYear;
-          } else {
-            hiddenDate = selectedMonth + "-" + selectedDay + "-" + selectedYear;
-          }
-          $(this).children('input[type="hidden"]').val(hiddenDate);
+        if ((selectedYear * selectedMonth * selectedDay) != 0) {
+          hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
+          $(this).find('#'+settings["fieldId"]).val(hiddenDate);
         }
       });
     });
