@@ -155,7 +155,7 @@
           hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
           $(this).find('#'+settings["fieldId"]).val(hiddenDate);
           if (settings["onChange"] != null) {
-            settings["onChange"]();
+            settings["onChange"](hiddenDate);
           }
         }
       });
