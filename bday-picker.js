@@ -32,7 +32,8 @@
       "defaultDate"   : false,
       "fieldName"     : "birthdate",
       "fieldId"       : "birthdate",
-      "hiddenDate"    : true
+      "hiddenDate"    : true,
+      "onChange"      : null
     };
     
     return this.each(function() {
@@ -153,6 +154,9 @@
         if ((selectedYear * selectedMonth * selectedDay) != 0) {
           hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
           $(this).find('#'+settings["fieldId"]).val(hiddenDate);
+          if (settings["onChange"] != null) {
+            settings["onChange"]();
+          }
         }
       });
     });
