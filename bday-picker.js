@@ -1,5 +1,5 @@
 /*!
- * jQuery Birthday Picker: v1.3 - 3/21/2011
+ * jQuery Birthday Picker: v1.4 - 10/16/2011
  * http://abecoffman.com/stuff/birthdaypicker
  *
  * Copyright (c) 2010 Abe Coffman
@@ -93,7 +93,10 @@
 
       // Create the hidden date markup
       if (settings["hiddenDate"]) {
-        $("<input type='hidden' name='"+settings["fieldName"]+"' id='"+settings["fieldId"]+"' />").val(hiddenDate).appendTo($fieldset);
+        $("<input type='hidden' name='" + settings["fieldName"] + "'/>")
+            .attr("id", settings["fieldId"])
+            .val(hiddenDate)
+            .appendTo($fieldset);
       }
 
       // Build the initial option sets
@@ -128,7 +131,7 @@
             selectedMonth = $month.val(),
             selectedDay = $day.val(),
             // number of days in currently selected year/month
-            actMaxDay = (new Date(selectedYear, selectedMonth, 0)).getDate()
+            actMaxDay = (new Date(selectedYear, selectedMonth, 0)).getDate(),
             // max values currently in the markup
             curMaxMonth = parseInt($month.children(":last").val()),
             curMaxDay = parseInt($day.children(":last").val());
