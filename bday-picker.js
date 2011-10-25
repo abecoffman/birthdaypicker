@@ -23,6 +23,7 @@
 
     var settings = {
       "maxAge"        : 120,
+      "minAge"        : 0,
       "futureDates"   : false,
       "maxYear"       : todayYear,
       "dateFormat"    : "middleEndian",
@@ -100,7 +101,7 @@
       }
 
       // Build the initial option sets
-      var startYear = todayYear;
+      var startYear = todayYear - settings["minAge"];
       var endYear = todayYear - settings["maxAge"];
       if (settings["futureDates"] && settings["maxYear"] != todayYear) {
         if (settings["maxYear"] > 1000) { startYear = settings["maxYear"]; }

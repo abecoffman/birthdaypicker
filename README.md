@@ -21,6 +21,10 @@ The following options are currently supported:
 #### Default value: 120 ####
 The maxAge setting determines the oldest year you can pick for a birthday. So if you set the maxAge to 100 and the current year is 2010, then the oldest year you can pick will be 1910.
 
+###minAge (number)
+#### Default value: 0 ####
+The opposite of maxAge. If current year is 2010 and minAge is set to 18, the earliest year that can be picked is 1992.
+
 ###futureDates (boolean)
 ####Default value: false
 The futureDates setting determines whether birthdays in the future can be selected. Unless you need to support entering birthdays of unborn babies, this should generally be false.
