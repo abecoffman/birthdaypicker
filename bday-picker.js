@@ -107,7 +107,7 @@
         if (settings["maxYear"] > 1000) { startYear = settings["maxYear"]; }
         else { startYear = todayYear + settings["maxYear"]; }
       }
-      while (startYear >= endYear) { $("<option></option>").attr("value", startYear).text(startYear).appendTo($year); startYear--; }
+      for (var i=startYear; i>=endYear; i--) { $("<option></option>").attr("value", i).text(i).appendTo($year); }
       for (var j=0; j<12; j++) { $("<option></option>").attr("value", j+1).text(months[settings["monthFormat"]][j]).appendTo($month); }
       for (var k=1; k<32; k++) { $("<option></option>").attr("value", k).text(k).appendTo($day); }
       $(this).append($fieldset);
@@ -128,9 +128,9 @@
             todayMonth = todayDate.getMonth() + 1,
             todayDay = todayDate.getDate(),
             // currently selected values
-            selectedYear = $year.val(),
-            selectedMonth = $month.val(),
-            selectedDay = $day.val(),
+            selectedYear = parseInt($year.val(), 10),
+            selectedMonth = parseInt($month.val(), 10),
+            selectedDay = parseInt($day.val(), 10),
             // number of days in currently selected year/month
             actMaxDay = (new Date(selectedYear, selectedMonth, 0)).getDate(),
             // max values currently in the markup
@@ -152,7 +152,8 @@
         }
 
         // Dealing with future months/days in current year
-        if (!settings["futureDates"] && selectedYear == todayYear) {
+        // or months/days that fall after the minimum age
+        if (!settings["futureDates"] && selectedYear == startYear) {
           if (curMaxMonth > todayMonth) {
             while (curMaxMonth > todayMonth) {
               $month.children(":last").remove();
@@ -161,11 +162,17 @@
             // reset the day selection
             $day.children(":first").attr("selected", "selected");
           }
+          if (selectedMonth === todayMonth) {
+              while (curMaxDay > todayDay) {
+                  $day.children(":last").remove();
+                  curMaxDay -= 1;
+              }
+          }
         }
 
         // Adding months back that may have been removed
         // http://bugs.jquery.com/ticket/3041
-        if (selectedYear != todayYear && curMaxMonth != 12) {
+        if (selectedYear != startYear && curMaxMonth != 12) {
           while (curMaxMonth < 12) {
             $month.append("<option value=" + (curMaxMonth+1) + ">" + months[settings["monthFormat"]][curMaxMonth] + "</option>");
             curMaxMonth++;
