@@ -121,7 +121,7 @@
       }
 
       // Update the option sets according to options and user selections
-      $fieldset.change(function() {
+      $fieldset.change(function() {    
             // todays date values
         var todayDate = new Date(),
             todayYear = todayDate.getFullYear(),
@@ -136,6 +136,20 @@
             // max values currently in the markup
             curMaxMonth = parseInt($month.children(":last").val()),
             curMaxDay = parseInt($day.children(":last").val());
+		
+        //IE - 7 patch- Anandaraj
+        if (settings["dateFormat"] == "bigEndian") {		
+            $day.remove();                	 
+            $month.remove();  
+            $year.after($month);
+            $month.after($day); 
+        } else if (settings["dateFormat"] == "littleEndian") {		
+            $day.remove();                	 
+            $day.insertBefore($month);
+        } else {			
+            $day.remove();                	 
+            $month.after($day);
+        }
 
         // Dealing with the number of days in a month
         // http://bugs.jquery.com/ticket/3041
