@@ -37,7 +37,11 @@
       "onChange"      : null,
       "tabindex"      : null
     };
-
+    
+    function isBoolean(value) {
+ 	  return true == value || false == value;
+	}
+		
     return this.each(function() {
 
       if (options) { $.extend(settings, options); }
@@ -85,15 +89,22 @@
 
       var hiddenDate;
       if (settings["defaultDate"]) {
-        var defDate = new Date(settings["defaultDate"] + "T00:00:00"),
-        defYear = defDate.getFullYear(),
-        defMonth = defDate.getMonth() + 1,
-        defDay = defDate.getDate();
-        hiddenDate = defYear + "-" + defMonth + "-" + defDay;
+        var defDate = null;
+        if(isBoolean(settings["defaultDate"]) && !isBoolean(settings["hiddenDate"])) {
+        	defDate = new Date($('#'+settings["hiddenDate"]).val());
+        } else if(!isBoolean(settings["defaultDate"])){ 
+        	defDate = new Date(settings["defaultDate"]);
+        }
+        if(defDate != null) {
+			var defYear = defDate.getFullYear(),
+			defMonth = defDate.getMonth() + 1,
+			defDay = defDate.getDate();
+			hiddenDate = defYear + "/" + defMonth + "/" + defDay;
+        }
       }
 
       // Create the hidden date markup
-      if (settings["hiddenDate"]) {
+      if (settings["hiddenDate"] && isBoolean(settings["hiddenDate"])) {
         $("<input type='hidden' name='" + settings["fieldName"] + "'/>")
             .attr("id", settings["fieldId"])
             .val(hiddenDate)
@@ -114,7 +125,7 @@
 
       // Set the default date if given
       if (settings["defaultDate"]) {
-        var date = new Date(settings["defaultDate"] + "T00:00:00");
+        var date = new Date(hiddenDate);
         $year.val(date.getFullYear());
         $month.val(date.getMonth() + 1);
         $day.val(date.getDate());
@@ -179,13 +190,19 @@
           }
         }
 
-        // update the hidden date
-        if ((selectedYear * selectedMonth * selectedDay) != 0) {
-          hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
-          $(this).find('#'+settings["fieldId"]).val(hiddenDate);
-          if (settings["onChange"] != null) {
-            settings["onChange"](hiddenDate);
-          }
+        // update the hidden date, if enabled
+        if(settings["hiddenDate"]) {
+			if ((selectedYear * selectedMonth * selectedDay) != 0) {
+			  hiddenDate = selectedYear + "/" + selectedMonth + "/" + selectedDay;
+			  if(!isBoolean(settings["hiddenDate"])) {
+				$("input" + '#'+settings["hiddenDate"]).val(hiddenDate);
+			  } else { 
+				$(this).find('#'+settings["fieldId"]).val(hiddenDate);
+			  }
+			  if (settings["onChange"] != null) {
+				settings["onChange"](hiddenDate);
+			  }
+			}
         }
       });
     });

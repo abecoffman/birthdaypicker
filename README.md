@@ -51,11 +51,18 @@ The placeholder adds a default option to each select list just like Facebook doe
 
 ###defaultDate (string)
 ####Default value: false
-The defaultDate must be a date that can be parsed by the Javascript date library. I recommend passing a string in one of the following formats: MM-DD-YYYY or YYYY-MM-DD.
 
-###hiddenDate (boolean)
+* false: No default Date.
+* true: It will take value of the existing hiddenDate input field. For this, id of the input field has to be provided in option hiddenDate.
+* string: The defaultDate must be a date that can be parsed by the Javascript date library. I recommend passing a string in one of the following formats: MM/DD/YYYY or YYYY/MM/DD.
+
+###hiddenDate (string)
 ####Default Value: true
-The hiddenDate adds a hidden input field named "birthdate" to the fieldset which concatenates all of the individual select boxes into a single date. This date is only available after the user has selected a date in each of the select boxes. It can make server side handling easier as you only have to worry about one field.
+This date is only available after the user has selected a date in each of the select boxes. It can make server side handling easier as you only have to worry about one field.
+
+* false: No hiddenDate input field.
+* true: The hiddenDate adds a hidden input field named "birthdate" to the fieldset which concatenates all of the individual select boxes into a single date. 
+* string: Id of existing input field. If you already have a input field in your form for the birthday, you can provide the id of the input field and birthday picker will insert the date. Note: The plugin won't make input field hidden.
 
 ###legend (string)
 
