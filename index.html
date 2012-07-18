@@ -15,7 +15,7 @@
           futureDates: true,
           maxYear: 2020,
           maxAge: 75,
-          defaultDate: "10-17-1980"
+          defaultDate: "10/17/1980"
         });
         $("#picker3").birthdaypicker({
           dateFormat: "bigEndian",
@@ -25,6 +25,10 @@
         });
         $("#picker4").birthdaypicker({
           minAge: 13
+        });        
+        $("#picker5").birthdaypicker({
+        	hiddenDate: "birthday",
+        	defaultDate: true
         });
       });
     </script>
@@ -40,17 +44,20 @@
       <h1>Birthday Picker jQuery Plugin</h1>
       <div id="examples">
         <h4>Default Settings</h4>
-        <div class="picker" id="picker1"></div>
-        <h4>futureDates: true, maxYear: 2020, maxAge: 75, defaultDate: 10-17-1980</h4>
+		<div class="picker" id="picker1"></div>
+        <h4>futureDates: true, maxYear: 2020, maxAge: 75, defaultDate: 10/17/1980</h4>
         <div class="picker" id="picker2"></div>
         <h4>dateFormat: bigEndian, monthFormat: long, placeholder: false, hiddenDate: false</h4>
         <div class="picker" id="picker3"></div>
         <h4>minAge: 13</h4>
-        <div class="picker" id="picker4"></div>
+        <div class="picker" id="picker4"></div>        
+        <h4>hiddenDate: birthday, defaultDate: true</h4>
+        <div class="picker" id="picker5">
+        	<input id="birthday" name="birthday" type="text" value="1984/02/06">
+        </div>
       </div>
       <h3>Resources</h3>
       <ul id="link">
-        <li><a href="http://plugins.jquery.com/project/birthdaypicker">jQuery Plugin</a></li>
         <li><a href="https://github.com/abecoffman/birthdaypicker">Github Source</a></li>
         <li><a href="http://abecoffman.com/2011/jquery-birthday-picker/">Blog Post</a></li>
       </div>
