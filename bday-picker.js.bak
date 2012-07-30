@@ -26,7 +26,6 @@
       "minAge"        : 0,
       "futureDates"   : false,
       "maxYear"       : todayYear,
-      "fieldName"     : "birth",
       "dateFormat"    : "middleEndian",
       "monthFormat"   : "short",
       "placeholder"   : true,
@@ -45,9 +44,9 @@
 
       // Create the html picker skeleton
       var $fieldset = $("<fieldset class='birthday-picker'></fieldset>"),
-          $year = $("<select class='birth-year required' required='required' data-message='Birth Year' name='" + settings["fieldName"] + "[year]'></select>"),
-          $month = $("<select class='birth-month required' required='required' data-message='Birth Month' name='" + settings["fieldName"] + "[month]'></select>"),
-          $day = $("<select class='birth-day required' required='required' data-message='Birth Day' name='" + settings["fieldName"] + "[day]'></select>");
+          $year = $("<select class='birth-year' name='birth[year]'></select>"),
+          $month = $("<select class='birth-month' name='birth[month]'></select>"),
+          $day = $("<select class='birth-day' name='birth[day]'></select>");
 
       if (settings["legend"]) { $("<legend>" + settings["legend"] + "</legend>").appendTo($fieldset); }
 
@@ -86,7 +85,7 @@
 
       var hiddenDate;
       if (settings["defaultDate"]) {
-        var defDate = new Date(settings["defaultDate"]),
+        var defDate = new Date(settings["defaultDate"] + "T00:00:00"),
         defYear = defDate.getFullYear(),
         defMonth = defDate.getMonth() + 1,
         defDay = defDate.getDate();
@@ -115,7 +114,7 @@
 
       // Set the default date if given
       if (settings["defaultDate"]) {
-        var date = new Date(settings["defaultDate"]);
+        var date = new Date(settings["defaultDate"] + "T00:00:00");
         $year.val(date.getFullYear());
         $month.val(date.getMonth() + 1);
         $day.val(date.getDate());
