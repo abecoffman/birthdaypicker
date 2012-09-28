@@ -5,18 +5,27 @@
  * Copyright (c) 2010 Abe Coffman
  * Dual licensed under the MIT and GPL licenses.
  *
+ * Timur: I've added support for Localization 
+ *   monthsLocal - for local months names
+ *   placeholdersLocal - fol local placeholders names
  */
 
 (function( $ ){
 
   // plugin variables
   var months = {
-    "short": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    "long": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] },
-      todayDate = new Date(),
-      todayYear = todayDate.getFullYear(),
-      todayMonth = todayDate.getMonth() + 1,
-      todayDay = todayDate.getDate();
+  	"short": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+		"long": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] 
+	},
+	placeholders = { 
+		day: "Day",
+		month: "Month",
+		year: "Year"
+	},
+	todayDate = new Date(),
+	todayYear = todayDate.getFullYear(),
+	todayMonth = todayDate.getMonth() + 1,
+	todayDay = todayDate.getDate();
 
 
   $.fn.birthdaypicker = function( options ) {
@@ -35,7 +44,9 @@
       "fieldId"       : "birthdate",
       "hiddenDate"    : true,
       "onChange"      : null,
-      "tabindex"      : null
+      "tabindex"      : null,
+      "monthsLocal"   : months,
+      "placeholdersLocal" : placeholders
     };
 
     return this.each(function() {
@@ -78,9 +89,9 @@
 
       // Add the option placeholders if specified
       if (settings["placeholder"]) {
-        $("<option value='0'>Year:</option>").appendTo($year);
-        $("<option value='0'>Month:</option>").appendTo($month);
-        $("<option value='0'>Day:</option>").appendTo($day);
+        $("<option value='0'>"+settings.placeholdersLocal.year+":</option>").appendTo($year);
+        $("<option value='0'>"+settings.placeholdersLocal.month+":</option>").appendTo($month);
+        $("<option value='0'>"+settings.placeholdersLocal.day+":</option>").appendTo($day);
       }
 
       var hiddenDate;
@@ -108,7 +119,7 @@
         else { startYear = todayYear + settings["maxYear"]; }
       }
       for (var i=startYear; i>=endYear; i--) { $("<option></option>").attr("value", i).text(i).appendTo($year); }
-      for (var j=0; j<12; j++) { $("<option></option>").attr("value", j+1).text(months[settings["monthFormat"]][j]).appendTo($month); }
+      for (var j=0; j<12; j++) { $("<option></option>").attr("value", j+1).text(settings.monthsLocal[settings.monthFormat][j]).appendTo($month); }
       for (var k=1; k<32; k++) { $("<option></option>").attr("value", k).text(k).appendTo($day); }
       $(this).append($fieldset);
 
@@ -174,7 +185,7 @@
         // http://bugs.jquery.com/ticket/3041
         if (selectedYear != startYear && curMaxMonth != 12) {
           while (curMaxMonth < 12) {
-            $month.append("<option value=" + (curMaxMonth+1) + ">" + months[settings["monthFormat"]][curMaxMonth] + "</option>");
+            $month.append("<option value=" + (curMaxMonth+1) + ">" + settings.monthsLocal[settings.monthFormat][curMaxMonth] + "</option>");
             curMaxMonth++;
           }
         }
