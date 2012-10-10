@@ -28,6 +28,7 @@
       "maxYear"       : todayYear,
       "dateFormat"    : "middleEndian",
       "monthFormat"   : "short",
+      "monthValue"    : "number",
       "placeholder"   : true,
       "legend"        : "",
       "defaultDate"   : false,
@@ -83,23 +84,6 @@
         $("<option value='0'>Day:</option>").appendTo($day);
       }
 
-      var hiddenDate;
-      if (settings["defaultDate"]) {
-        var defDate = new Date(settings["defaultDate"] + "T00:00:00"),
-        defYear = defDate.getFullYear(),
-        defMonth = defDate.getMonth() + 1,
-        defDay = defDate.getDate();
-        hiddenDate = defYear + "-" + defMonth + "-" + defDay;
-      }
-
-      // Create the hidden date markup
-      if (settings["hiddenDate"]) {
-        $("<input type='hidden' name='" + settings["fieldName"] + "'/>")
-            .attr("id", settings["fieldId"])
-            .val(hiddenDate)
-            .appendTo($fieldset);
-      }
-
       // Build the initial option sets
       var startYear = todayYear - settings["minAge"];
       var endYear = todayYear - settings["maxAge"];
@@ -112,14 +96,55 @@
       for (var k=1; k<32; k++) { $("<option></option>").attr("value", k).text(k).appendTo($day); }
       $(this).append($fieldset);
 
-      // Set the default date if given
+      // Set the default date if given  - FH
+      var hiddenDate;
       if (settings["defaultDate"]) {
-        var date = new Date(settings["defaultDate"] + "T00:00:00");
-        $year.val(date.getFullYear());
-        $month.val(date.getMonth() + 1);
-        $day.val(date.getDate());
+        var defaultDate = settings["defaultDate"];      
+        if(settings["monthValue"] == "number") { // format: 10/2/2012
+        
+          if ( defaultDate.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/i) ) {  // 10/02/2012
+            $year.val(defaultDate.substr(defaultDate.lastIndexOf("/") + 1, 4));
+            $month.val( defaultDate.substring(0 ,defaultDate.indexOf("/")) );
+            $day.val(defaultDate.substring(defaultDate.indexOf("/") + 1, defaultDate.lastIndexOf("/")));
+          } else if ( defaultDate.match(/^\d{1,2}\/\d{4}$/i) ) {    // 10/2012
+            $year.val(defaultDate.substr(defaultDate.indexOf("/") + 1, 4));
+            $month.val(defaultDate.substring(0 , defaultDate.indexOf("/")));
+            $day.val(0); 
+          } else if ( defaultDate.match(/^\d{4}$/i) ) {                  // 2012
+            $year.val(defaultDate.substr(0, 4));
+            $month.val(0);
+            $day.val(0);
+          }
+          
+        } else { // monthValue == name, format: October 1, 2012
+        
+           if ( defaultDate.match(/^\w+ \d{1,2}, \d{4}$/i) ) {       // October 3, 2012
+            $year.val(defaultDate.substr(defaultDate.lastIndexOf(",") + 2, 4));
+            $month.val( jQuery.inArray(defaultDate.substring(0 ,defaultDate.indexOf(" ")), months[settings["monthFormat"]]) + 1 );
+            $day.val(defaultDate.substring(defaultDate.indexOf(" ") + 1, defaultDate.lastIndexOf(",")));
+          } else if ( defaultDate.match(/^\w+, \d{4}$/i) ) {        // October, 2012
+            $year.val(defaultDate.substr(defaultDate.indexOf(",") + 2, 4));
+            $month.val( jQuery.inArray(defaultDate.substring(0 ,defaultDate.indexOf(",")), months[settings["monthFormat"]]) + 1 );
+            $day.val(0); 
+          } else if ( defaultDate.match(/^\d{4}$/i) ) {                // 2012
+            $year.val(defaultDate.substr(0, 4));
+            $month.val(0);
+            $day.val(0);
+          } 
+          
+        }
+        hiddenDate = defaultDate;
+        
       }
 
+      // Create the hidden date markup
+      if (settings["hiddenDate"]) {
+        $("<input type='hidden' name='" + settings["fieldName"] + "'/>")
+            .attr("id", settings["fieldId"])
+            .val(hiddenDate)
+            .appendTo($fieldset);
+      }
+      
       // Update the option sets according to options and user selections
       $fieldset.change(function() {
             // todays date values
@@ -179,14 +204,49 @@
           }
         }
 
-        // update the hidden date
-        if ((selectedYear * selectedMonth * selectedDay) != 0) {
-          hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
+        // disable condition
+        if ( selectedYear == 0 ) {
+          $month.attr('disabled',true);
+          $day.attr('disabled',true);
+        } else if ( selectedMonth == 0 ) {
+          $month.removeAttr('disabled');        
+          $day.attr('disabled',true);
+        } else {
+          $month.removeAttr('disabled');
+          $day.removeAttr('disabled');  
+        }
+        
+        // update the hidden date - FH
+        if(settings["monthValue"] == "number") { // format: 10/2/2012
+        
+          if ((selectedYear * selectedMonth * selectedDay) != 0) {
+            hiddenDate = selectedMonth + "/" + selectedDay + "/" + selectedYear;
+          } else if ( (selectedYear * selectedMonth) != 0 && selectedDay == 0) {
+            hiddenDate = selectedMonth + "/" + selectedYear;
+          } else if ( selectedYear != 0 && selectedMonth == 0 ) {
+            hiddenDate = selectedYear;
+          } else {
+            hiddenDate = "";
+          }
+          
+        } else { // monthValue == name, format: October 1, 2012
+        
+          if ((selectedYear * selectedMonth * selectedDay) != 0) {
+            hiddenDate = months[settings["monthFormat"]][((selectedMonth - 1))] + " " + selectedDay + ", " + selectedYear;
+          } else if ( (selectedYear * selectedMonth) != 0 && selectedDay == 0) {
+            hiddenDate = months[settings["monthFormat"]][((selectedMonth - 1))]  + ", " + selectedYear;
+          } else if ( selectedYear != 0 && selectedMonth == 0 ) {
+            hiddenDate = selectedYear;
+          } else {
+            hiddenDate = "";
+          }        
+          
+        }        
+
           $(this).find('#'+settings["fieldId"]).val(hiddenDate);
           if (settings["onChange"] != null) {
             settings["onChange"](hiddenDate);
-          }
-        }
+          }          
       });
     });
   };
