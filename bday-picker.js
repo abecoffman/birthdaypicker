@@ -89,6 +89,8 @@
         defYear = defDate.getFullYear(),
         defMonth = defDate.getMonth() + 1,
         defDay = defDate.getDate();
+        if (defMonth<10) defMonth="0"+defMonth;
+        if (defDay<10) defDay="0"+defDay;
         hiddenDate = defYear + "-" + defMonth + "-" + defDay;
       }
 
@@ -181,6 +183,8 @@
 
         // update the hidden date
         if ((selectedYear * selectedMonth * selectedDay) != 0) {
+          if (selectedMonth<10) selectedMonth="0"+selectedMonth;
+          if (selectedDay<10) selectedDay="0"+selectedDay;
           hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
           $(this).find('#'+settings["fieldId"]).val(hiddenDate);
           if (settings["onChange"] != null) {
