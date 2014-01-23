@@ -43,7 +43,7 @@ The dateFormat setting determines the order of the select fields in the markup a
 
 ###monthFormat (string)
 ####Default value: short
-The monthFormat setting determines the text displayed in the month select box. It can be either short, or long. i.e. Jan or January
+The monthFormat setting determines the text displayed in the month select box. It can be short, long, or digits. i.e. Jan, January or 1
 
 ###placeholder (boolean)
 ####Default value: true

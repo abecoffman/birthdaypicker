@@ -12,7 +12,8 @@
   // plugin variables
   var months = {
     "short": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    "long": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] },
+    "long": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "digits": ["1","2","3","4","5","6","7","8","9","10","11","12"] },
       todayDate = new Date(),
       todayYear = todayDate.getFullYear(),
       todayMonth = todayDate.getMonth() + 1,
