@@ -125,15 +125,10 @@
               .attr("id", settings["fieldId"])
               .val(hiddenDate)
               .appendTo($parent); 
-                 /* $parent.append($("<input type='hidden' name='" + settings["fieldName"] + "'/>")
-              .attr("id", settings["fieldId"])
-              .val(hiddenDate));*/
-
           }
       }
       // Update the option sets according to options and user selections
       $fieldset.change(function() {
-          
             // todays date values
         var todayDate = new Date(),
             todayYear = todayDate.getFullYear(),
@@ -196,8 +191,6 @@
           if (selectedMonth<10) selectedMonth="0"+selectedMonth;
           if (selectedDay<10) selectedDay="0"+selectedDay;
           hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
-          //$(this).find('#'+settings["fieldId"]).val(hiddenDate) 
-          
           $(this).parent().find('#'+settings["fieldId"]).val(hiddenDate).trigger(settings['triggerEvent']);
           
           if (settings["onChange"] != null) {
