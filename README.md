@@ -61,3 +61,7 @@ The hiddenDate adds a hidden input field named "birthdate" to the fieldset which
 
 ####Default value: null
 The legend setting adds a legend to the fieldset. You can pass in any string.
+
+###triggerEvent (string)
+####Default Value: change
+The triggerEvent setting determines which event will be fired onn the hidden element change value. You can listen on that event with $(hidden-element).live(triggerEvent,function(){}) . You can also set custom events.

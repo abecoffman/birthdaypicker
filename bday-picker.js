@@ -1,11 +1,11 @@
 /*!
- * jQuery Birthday Picker: v1.4 - 10/16/2011
- * http://abecoffman.com/stuff/birthdaypicker
- *
- * Copyright (c) 2010 Abe Coffman
- * Dual licensed under the MIT and GPL licenses.
- *
- */
+* jQuery Birthday Picker: v1.4 - 10/16/2011
+* http://abecoffman.com/stuff/birthdaypicker
+*
+* Copyright (c) 2010 Abe Coffman
+* Dual licensed under the MIT and GPL licenses.
+*
+*/
 
 (function( $ ){
 
@@ -22,20 +22,21 @@
   $.fn.birthdaypicker = function( options ) {
 
     var settings = {
-      "maxAge"        : 120,
-      "minAge"        : 0,
-      "futureDates"   : false,
-      "maxYear"       : todayYear,
-      "dateFormat"    : "middleEndian",
-      "monthFormat"   : "short",
-      "placeholder"   : true,
-      "legend"        : "",
-      "defaultDate"   : false,
-      "fieldName"     : "birthdate",
-      "fieldId"       : "birthdate",
-      "hiddenDate"    : true,
-      "onChange"      : null,
-      "tabindex"      : null
+      "maxAge" : 120,
+      "minAge" : 0,
+      "futureDates" : false,
+      "maxYear" : todayYear,
+      "dateFormat" : "middleEndian",
+      "monthFormat" : "short",
+      "placeholder" : true,
+      "legend" : "",
+      "defaultDate" : false,
+      "fieldName" : "birthday",
+      "fieldId" : "birthday",
+      "hiddenDate" : true,
+      "onChange" : null,
+      "tabindex" : null,
+      "triggerEvent"   :'change'
     };
 
     return this.each(function() {
@@ -44,9 +45,10 @@
 
       // Create the html picker skeleton
       var $fieldset = $("<fieldset class='birthday-picker'></fieldset>"),
-          $year = $("<select class='birth-year' name='birth[year]'></select>"),
-          $month = $("<select class='birth-month' name='birth[month]'></select>"),
-          $day = $("<select class='birth-day' name='birth[day]'></select>");
+          $parent=$(this),
+          $year = $("<select class='"+settings["fieldName"]+"-year' name='"+settings["fieldName"]+"[year]'></select>"),
+          $month = $("<select class='"+settings["fieldName"]+"-month' name='"+settings["fieldName"]+"[month]'></select>"),
+          $day = $("<select class='"+settings["fieldName"]+"-day' name='"+settings["fieldName"]+"[day]'></select>");
 
       if (settings["legend"]) { $("<legend>" + settings["legend"] + "</legend>").appendTo($fieldset); }
 
@@ -94,13 +96,7 @@
         hiddenDate = defYear + "-" + defMonth + "-" + defDay;
       }
 
-      // Create the hidden date markup
-      if (settings["hiddenDate"]) {
-        $("<input type='hidden' name='" + settings["fieldName"] + "'/>")
-            .attr("id", settings["fieldId"])
-            .val(hiddenDate)
-            .appendTo($fieldset);
-      }
+
 
       // Build the initial option sets
       var startYear = todayYear - settings["minAge"];
@@ -112,7 +108,7 @@
       for (var i=startYear; i>=endYear; i--) { $("<option></option>").attr("value", i).text(i).appendTo($year); }
       for (var j=0; j<12; j++) { $("<option></option>").attr("value", j+1).text(months[settings["monthFormat"]][j]).appendTo($month); }
       for (var k=1; k<32; k++) { $("<option></option>").attr("value", k).text(k).appendTo($day); }
-      $(this).append($fieldset);
+      $(this).append($fieldset); createHidden();
 
       // Set the default date if given
       if (settings["defaultDate"]) {
@@ -121,7 +117,16 @@
         $month.val(date.getMonth() + 1);
         $day.val(date.getDate());
       }
-
+      function createHidden(){
+      // Create the hidden date markup
+        if (settings["hiddenDate"]) {
+          if(!$('#'+settings['fieldId']).length)  
+          $("<input type='hidden' name='" + settings["fieldName"] + "'/>")
+              .attr("id", settings["fieldId"])
+              .val(hiddenDate)
+              .appendTo($parent); 
+          }
+      }
       // Update the option sets according to options and user selections
       $fieldset.change(function() {
             // todays date values
@@ -186,12 +191,14 @@
           if (selectedMonth<10) selectedMonth="0"+selectedMonth;
           if (selectedDay<10) selectedDay="0"+selectedDay;
           hiddenDate = selectedYear + "-" + selectedMonth + "-" + selectedDay;
-          $(this).find('#'+settings["fieldId"]).val(hiddenDate);
+          $(this).parent().find('#'+settings["fieldId"]).val(hiddenDate).trigger(settings['triggerEvent']);
+          
           if (settings["onChange"] != null) {
             settings["onChange"](hiddenDate);
           }
+          
         }
-      });
+     return false;});
     });
   };
 })( jQuery );
