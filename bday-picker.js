@@ -35,18 +35,22 @@
       "fieldId"       : "birthdate",
       "hiddenDate"    : true,
       "onChange"      : null,
-      "tabindex"      : null
+      "tabindex"      : null,
+      "ariaDesc"      : null,
+      "ariaLabel"     : null
     };
 
     return this.each(function() {
 
       if (options) { $.extend(settings, options); }
 
+      var ariaDesc = settings["ariaDesc"] ? (" aria-describedby='" + settings["ariaDesc"] + "'") : "";
+
       // Create the html picker skeleton
       var $fieldset = $("<fieldset class='birthday-picker'></fieldset>"),
-          $year = $("<select class='birth-year' name='birth[year]'></select>"),
-          $month = $("<select class='birth-month' name='birth[month]'></select>"),
-          $day = $("<select class='birth-day' name='birth[day]'></select>");
+          $year = $("<select class='birth-year' name='birth_year'" + ariaDesc + (settings["ariaLabel"] ? " aria-label='birth year'" : "") + "></select>"),
+          $month = $("<select class='birth-month' name='birth_month'" + ariaDesc + (settings["ariaLabel"] ? " aria-label='birth month'" : "") + "></select>"),
+          $day = $("<select class='birth-day' name='birth_day'" + ariaDesc + (settings["ariaLabel"] ? " aria-label='birthday'" : "") + "></select>");
 
       if (settings["legend"]) { $("<legend>" + settings["legend"] + "</legend>").appendTo($fieldset); }
 
