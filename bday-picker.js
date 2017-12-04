@@ -35,7 +35,17 @@
       "fieldId"       : "birthdate",
       "hiddenDate"    : true,
       "onChange"      : null,
-      "tabindex"      : null
+      "tabindex"      : null,
+      "selectClass"   : 'birthdate-select',
+      
+      // Translation ability
+      "l18n"          : {
+        "short"       : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        "long"        : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        "year"        : "Year:",
+        "day"         : "Day:",
+        "month"       : "Month:"
+      }
     };
 
     return this.each(function() {
@@ -44,9 +54,9 @@
 
       // Create the html picker skeleton
       var $fieldset = $("<fieldset class='birthday-picker'></fieldset>"),
-          $year = $("<select class='birth-year' name='birth[year]'></select>"),
-          $month = $("<select class='birth-month' name='birth[month]'></select>"),
-          $day = $("<select class='birth-day' name='birth[day]'></select>");
+          $year = $("<select class='birth-year' name='birth[year]'></select>").addClass( settings["selectClass"] ),
+          $month = $("<select class='birth-month' name='birth[month]'></select>").addClass( settings["selectClass"] ),
+          $day = $("<select class='birth-day' name='birth[day]'></select>").addClass( settings["selectClass"] );
 
       if (settings["legend"]) { $("<legend>" + settings["legend"] + "</legend>").appendTo($fieldset); }
 
@@ -78,9 +88,9 @@
 
       // Add the option placeholders if specified
       if (settings["placeholder"]) {
-        $("<option value='0'>Year:</option>").appendTo($year);
-        $("<option value='0'>Month:</option>").appendTo($month);
-        $("<option value='0'>Day:</option>").appendTo($day);
+        $("<option value='0'>" + settings['l18n']['year'] +"</option>").appendTo($year);
+        $("<option value='0'>" + settings['l18n']['month'] + "</option>").appendTo($month);
+        $("<option value='0'>" + settings['l18n']['day'] + "</option>").appendTo($day);
       }
 
       var hiddenDate;
@@ -110,7 +120,8 @@
         else { startYear = todayYear + settings["maxYear"]; }
       }
       for (var i=startYear; i>=endYear; i--) { $("<option></option>").attr("value", i).text(i).appendTo($year); }
-      for (var j=0; j<12; j++) { $("<option></option>").attr("value", j+1).text(months[settings["monthFormat"]][j]).appendTo($month); }
+      //  for (var j=0; j<12; j++) { $("<option></option>").attr("value", j+1).text(months[settings["monthFormat"]][j]).appendTo($month); }
+      for (var j=0; j<12; j++) { $("<option></option>").attr("value", j+1).text(settings['l18n'][settings["monthFormat"]][j]).appendTo($month); }
       for (var k=1; k<32; k++) { $("<option></option>").attr("value", k).text(k).appendTo($day); }
       $(this).append($fieldset);
 
