@@ -54,9 +54,9 @@
 
       // Create the html picker skeleton
       var $fieldset = $("<fieldset class='birthday-picker'></fieldset>"),
-          $year = $("<select class='birth-year' name='birth[year]'></select>").addClass( settings["selectClass"] ),
-          $month = $("<select class='birth-month' name='birth[month]'></select>").addClass( settings["selectClass"] ),
-          $day = $("<select class='birth-day' name='birth[day]'></select>").addClass( settings["selectClass"] );
+          $year = $("<select class='birth-year' name='birth[year]' rquired='required'></select>").addClass( settings["selectClass"] ),
+          $month = $("<select class='birth-month' name='birth[month]' rquired='required'></select>").addClass( settings["selectClass"] ),
+          $day = $("<select class='birth-day' name='birth[day]' rquired='required'></select>").addClass( settings["selectClass"] );
 
       if (settings["legend"]) { $("<legend>" + settings["legend"] + "</legend>").appendTo($fieldset); }
 
@@ -88,9 +88,9 @@
 
       // Add the option placeholders if specified
       if (settings["placeholder"]) {
-        $("<option value='0'>" + settings['l18n']['year'] +"</option>").appendTo($year);
-        $("<option value='0'>" + settings['l18n']['month'] + "</option>").appendTo($month);
-        $("<option value='0'>" + settings['l18n']['day'] + "</option>").appendTo($day);
+        $("<option value=''>" + settings['l18n']['year'] +"</option>").appendTo($year);
+        $("<option value=''>" + settings['l18n']['month'] + "</option>").appendTo($month);
+        $("<option value=''>" + settings['l18n']['day'] + "</option>").appendTo($day);
       }
 
       var hiddenDate;
