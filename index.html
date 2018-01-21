@@ -6,7 +6,8 @@
     <meta name="author" content="Abe Coffman">
     <meta name="description" content="Jquery Plugin for picking a birthday" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+    <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script> -->
+    <script type="text/javascript" src="l18n/pl_PL.js"></script>
     <script type="text/javascript" src="bday-picker.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
@@ -25,6 +26,10 @@
         });
         $("#picker4").birthdaypicker({
           minAge: 13
+        });
+        $("#picker5").birthdaypicker({
+          minAge: 13,
+          l18n: birthDate_l18n
         });
       });
     </script>
@@ -47,6 +52,8 @@
         <div class="picker" id="picker3"></div>
         <h4>minAge: 13</h4>
         <div class="picker" id="picker4"></div>
+        <h4>with l18n</h4>
+        <div class="picker" id="picker5"></div>
       </div>
       <h3>Resources</h3>
       <ul id="link">
